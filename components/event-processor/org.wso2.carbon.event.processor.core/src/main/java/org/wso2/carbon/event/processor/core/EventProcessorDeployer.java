@@ -25,7 +25,7 @@ import org.apache.axis2.engine.AxisConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
-import org.wso2.carbon.event.processing.application.deployer.EventProcessingDeployer;
+import org.wso2.carbon.event.application.deployer.EventProcessingDeployer;
 import org.wso2.carbon.event.processor.core.exception.ExecutionPlanConfigurationException;
 import org.wso2.carbon.event.processor.core.exception.ExecutionPlanDependencyValidationException;
 import org.wso2.carbon.event.processor.core.exception.ServiceDependencyValidationException;
@@ -58,7 +58,6 @@ public class EventProcessorDeployer extends AbstractDeployer implements EventPro
      *
      * @param deploymentFileData information about query plan
      * @throws org.apache.axis2.deployment.DeploymentException
-     *
      */
     public void deploy(DeploymentFileData deploymentFileData) throws DeploymentException {
         try {
@@ -89,7 +88,6 @@ public class EventProcessorDeployer extends AbstractDeployer implements EventPro
      *
      * @param filePath the path to the bucket to be removed
      * @throws org.apache.axis2.deployment.DeploymentException
-     *
      */
     public void undeploy(String filePath) throws DeploymentException {
         try {
@@ -112,7 +110,7 @@ public class EventProcessorDeployer extends AbstractDeployer implements EventPro
         CarbonEventProcessorService carbonEventProcessorService = EventProcessorValueHolder.getEventProcessorService();
 
         File executionPlanFile = deploymentFileData.getFile();
-        boolean isEditable = !executionPlanFile.getAbsolutePath().contains(File.separator+ "carbonapps" + File.separator);
+        boolean isEditable = !executionPlanFile.getAbsolutePath().contains(File.separator + "carbonapps" + File.separator);
         int tenantId = PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantId();
         ExecutionPlanConfigurationFile executionPlanConfigurationFile = new ExecutionPlanConfigurationFile();
         if (!carbonEventProcessorService.isExecutionPlanFileAlreadyExist(executionPlanFile.getName(), tenantId)) {
@@ -122,7 +120,7 @@ public class EventProcessorDeployer extends AbstractDeployer implements EventPro
                 EventProcessorHelper.validateExecutionPlan(executionPlan, tenantId);
 
                 executionPlanName = EventProcessorHelper.getExecutionPlanName(executionPlan);
-                carbonEventProcessorService.addExecutionPlan(executionPlan, isEditable, configurationContext.getAxisConfiguration());
+                carbonEventProcessorService.addExecutionPlan(executionPlan, isEditable);
                 executionPlanConfigurationFile.setStatus(ExecutionPlanConfigurationFile.Status.DEPLOYED);
                 executionPlanConfigurationFile.setExecutionPlanName(executionPlanName);
                 executionPlanConfigurationFile.setAxisConfiguration(configurationContext.getAxisConfiguration());
@@ -209,14 +207,14 @@ public class EventProcessorDeployer extends AbstractDeployer implements EventPro
             }
             return sb.toString();
         } catch (FileNotFoundException e) {
-            throw new ExecutionPlanConfigurationException("File '"+ path +"' not found."+ e.getMessage(), e);
+            throw new ExecutionPlanConfigurationException("File '" + path + "' not found." + e.getMessage(), e);
         } catch (IOException e) {
-            throw new ExecutionPlanConfigurationException("Could not read from file "+ path +", "+ e.getMessage(), e);
+            throw new ExecutionPlanConfigurationException("Could not read from file " + path + ", " + e.getMessage(), e);
         } finally {
             try {
                 br.close();
             } catch (IOException e) {
-                throw new ExecutionPlanConfigurationException("Could not close the file "+ path +", "+ e.getMessage(), e);
+                throw new ExecutionPlanConfigurationException("Could not close the file " + path + ", " + e.getMessage(), e);
             }
         }
     }
