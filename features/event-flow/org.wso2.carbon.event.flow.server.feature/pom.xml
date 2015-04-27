@@ -26,7 +26,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <version>2.0.4-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.wso2.carbon.event.flow.server.feature</artifactId>
     <packaging>pom</packaging>
@@ -71,9 +70,9 @@
                             <importFeatures>
                                 <importFeatureDef>org.wso2.carbon.core:${carbon.kernel.version}
                                 </importFeatureDef>
-                                <importFeatureDef>org.wso2.carbon.event.receiver.server:${carbon.event.processing.version}
+                                <importFeatureDef>org.wso2.carbon.event.receiver.server:${carbon.analytics.common.version}
                                 </importFeatureDef>
-                                <importFeatureDef>org.wso2.carbon.event.publisher.server:${carbon.event.processing.version}
+                                <importFeatureDef>org.wso2.carbon.event.publisher.server:${carbon.analytics.common.version}
                                 </importFeatureDef>
                                 <importFeatureDef>org.wso2.carbon.event.stream.server:${carbon.analytics.common.version}
                                 </importFeatureDef>
